@@ -1,0 +1,92 @@
+{% extends 'base.html' %} {% load crispy_forms_tags %} {% block content %}
+
+<div class="card">
+  <div class="card-header">
+    <ul class="nav nav-tabs card-header-tabs">
+      <li class="btn btn-outline-warning text-uppercase border-0 nav-item">
+        <a class="nav-link border-0 text-secondary fs-4" aria-current="true" href="#">Munisipiu</a>
+      </li>
+      <li class="btn btn-outline-warning text-uppercase border-0 nav-item">
+        <a class="nav-link border-0 text-secondary fs-4" href="{% url 'postu' %}">Postu Admistrativo</a>
+      </li>
+      <li class="btn btn-outline-warning text-uppercase border-0 nav-item">
+        <a class="nav-link border-0 text-secondary fs-4" href="{% url 'suku'%}">Suku</a>
+      </li>
+    </ul>
+  </div>
+  <div class=" card-body">
+    <div class="card-body">
+      <h3>{{ sub_title }}</h3>
+      <hr />
+      <div class="my-2">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
+          id="btn_add">
+          <i class="fa fa-plus"></i> Aumenta dadus
+        </button>
+      </div>
+
+      <div class="table-responsive">
+        <table id="activityTable" class="table table-striped table-bordered">
+          <thead>
+            <tr>
+              <th scope="col" class="py-1">#</th>
+              <th scope="col" class="py-1">Naran Munisipiu</th>
+              <th scope="col" class="py-1">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for i in data %}
+            <tr>
+              <th scope="row" class="py-1">{{ forloop.counter }}</th>
+              <td class="py-1">{{ i.mun }}</td>
+              <td class="py-1">
+                <div class="d-flex">
+                  <form action="{% url 'update_mun' i.id_mun %}" class="ms-2">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-sm py-0 px-1 p-3 btn-warning">
+                      <i class="fa fa-edit"></i>
+                    </button>
+                  </form>
+                  <form action="{% url 'delete_mun' i.id_mun %}" class="ms-2">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-sm py-0 px-1 p-3 btn-dark">
+                      <i class="fa fa-trash"></i>
+                    </button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">{{ title_form }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="mun-form" action="{% url 'mun' %}" method="POST">
+          {% csrf_token %} {{ form|crispy }}
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" form="mun-form" class="btn btn-primary">
+          <i class="fa fa-save"></i> {{ btn }}
+        </button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+          <i class="fa fa-times"></i> Kansela
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

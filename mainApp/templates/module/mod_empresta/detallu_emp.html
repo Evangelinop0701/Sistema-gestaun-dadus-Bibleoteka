@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% block content %}
+<script type='text/javascript'>
+    // JavaScript anonymous function
+    (() => {
+        if (window.localStorage) {
+
+            // If there is no item as 'reload'
+            // in localstorage then create one &
+            // reload the page
+            if (!localStorage.getItem('reload')) {
+                localStorage['reload'] = true;
+                window.location.reload();
+            } else {
+
+                // If there exists a 'reload' item
+                // then clear the 'reload' item in
+                // local storage
+                localStorage.removeItem('reload');
+            }
+        }
+    })(); // Calling anonymous function here only
+</script>
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card rounded-1" id="card">
+            <div class="card-header rounded-0" id="card-header">
+                <div class="cart-title">
+                    <h5 class="card-title">{{sub_title}} husi - [<u>{{client_name}}</u>]</h5>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="activityTable" class="table table-striped table-bordered table-responsive-md">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="py-1">#</th>
+                                <th scope="col" class="py-1">Naran Livro</th>
+                                <th scope="col" class="py-1">Data Empresta</th>
+                                <th scope="col" class="py-1">Data Devolve</th>
+                                <th scope="col" class="py-1">Estadu</th>
+                                <th scope="col" class="py-1">Loron Tarde</th>
+                                <th scope="col" class="py-1">Multa</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in det_emp %}
+                            <tr>
+                                <td class="py-1">{{forloop.counter}}</td>
+                                <td class="py-1">{{i.id_livro.naran_livro}}</td>
+                                <td class="py-1">{{i.data_empresta}}</td>
+                                <td class="py-1">{{i.data_devolve}}</td>
+                                <td class="py-1">{{i.status}}</td>
+                                <td class="py-1">
+                                    {% if i.loron_tarde is None %}
+                                    <span class="text-center">-</span>
+                                    {% else %}
+                                    {{i.loron_tarde}}
+                                    {% endif %}
+
+                                </td>
+                                <td class="py-1">
+                                    {% if i.multa is None %}
+                                    <span class="text-center">-</span>
+                                    {% else %}
+                                    {{i.multa}}
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% block content %}
+<script type='text/javascript'>
+    // JavaScript anonymous function
+    (() => {
+        if (window.localStorage) {
+
+            // If there is no item as 'reload'
+            // in localstorage then create one &
+            // reload the page
+            if (!localStorage.getItem('reload')) {
+                localStorage['reload'] = true;
+                window.location.reload();
+            } else {
+
+                // If there exists a 'reload' item
+                // then clear the 'reload' item in
+                // local storage
+                localStorage.removeItem('reload');
+            }
+        }
+    })(); // Calling anonymous function here only
+</script>
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card rounded-1" id="card">
+            <div class="card-header rounded-0" id="card-header">
+                <div class="cart-title">
+                    <h5 class="card-title">{{sub_title}} husi <u class="text-secondary">[{{kl_name}}]</u></h5>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="my-2">
+                    <a href="{% url 'add_empresta' %}" class="btn btn-sm fw-bold" id="btn_add"><i
+                            class="fa fa-plus"></i> Aumenta dadus</a>
+                </div>
+
+                <div class="table-responsive">
+                    <table id="activityTable" class="table table-striped table-bordered table-responsive-md">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="py-1">#</th>
+                                <th scope="col" class="py-1">Naran Livro</th>
+                                <th scope="col" class="py-1">Data Empresta</th>
+                                <th scope="col" class="py-1">Data Devolve</th>
+                                <th scope="col" class="py-1">Estadu</th>
+                                <th scope="col" class="py-1">Loron Tarde</th>
+                                <th scope="col" class="py-1">Multa</th>
+                                <th scope="col" class="py-1">#</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in data %}
+                            <tr>
+                                <th scope="row" class="py-1">{{forloop.counter}}</th>
+                                <td class="py-1">{{i.id_livro.naran_livro}}</td>
+                                <td class="py-1">{{i.data_empresta}}</td>
+                                <td class="py-1">{{i.data_devolve}}</td>
+                                <td class="py-1">
+                                    {% if i.status == 'Empresta' %}
+                                    <span class="text-success">Empresta</span>
+                                    {% elif i.status == 'Devolve' %}
+                                    <span class="text-success">Devolve</span>
+                                    {% elif i.status == 'Tarde' %}
+                                    <span class="text-danger">Tarde</span>
+                                    {% endif %}
+                                </td>
+                                <td class="py-1">{% if i.loron_tarde == 0 %}{% else %}{{i.loron_tarde}}{% endif %}</td>
+                                <td class="py-1">{% if i.multa == 0.0 %}{% else %}{{i.multa}}{% endif %}</td>
+                                <td class="py-1">
+                                    <div class="dropdown">
+                                        <a class="btn btn-warning btn-sm py-1 rounded-2 dropdown-toggle" id="btn_add"
+                                            href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="fa fa-gears"></i> Asaun
+                                        </a>
+
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item"
+                                                    href="{% url 'update_empresta' i.id_empresta %}"
+                                                    style="font-size: 13px;"><i class="fa fa-edit"></i> Hadia</a></li>
+                                            <li><a class="dropdown-item"
+                                                    href="{% url 'delete_empresta' i.id_empresta i.id_livro.id_livro i.id_kliente.id_kliente %}"
+                                                    style="font-size: 13px;"><i class="fa fa-trash"></i> Hamos</a></li>
+                                            {% if i.status == 'Devolve' %}
+                                            <li><a class="dropdown-item"
+                                                    href="{% url 'kansela_status' i.id_empresta i.id_livro.id_livro i.id_kliente.id_kliente %}"
+                                                    style="font-size: 13px;"><i class="fa fa-pen"></i>Kansela</a></li>
+                                            {% else %}
+                                            <li><a class="dropdown-item"
+                                                    href="{% url 'update_estatus' i.id_empresta i.id_livro.id_livro i.id_kliente.id_kliente %}"
+                                                    style="font-size: 13px;"><i class="fa fa-pen"></i> Devolve</a></li>
+                                            {% endif %}
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

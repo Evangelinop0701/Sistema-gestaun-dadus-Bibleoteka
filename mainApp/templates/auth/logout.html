@@ -1,0 +1,69 @@
+{% load static %}
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{title}}</title>
+<!-- Bootstrap CSS -->
+<link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+<!-- Bootstrap Icons -->
+<link rel="stylesheet" href="{% static 'icon/all.css' %}">
+<script src="{% static 'icon/all.js' %}"></script>
+<!-- DataTables CSS -->
+<link rel="stylesheet" href="{% static 'datatables/dataTables.bootstrap5.min.css' %}">
+<!-- Chart.js -->
+<script src="{% static 'chartjs/chart.js' %}"></script>
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+
+    .header-image {
+        background-image: url('https://via.placeholder.com/1200x400');
+        /* Replace with your image URL */
+        height: 400px;
+        background-size: cover;
+        background-position: center;
+        position: relative;
+        color: white;
+        text-align: center;
+    }
+
+    .header-image h1 {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+</style>
+</head>
+
+<body>
+
+    <!-- <div class="header-image">
+        <h1>Welcome Back!</h1>
+    </div> -->
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6 mt-5">
+                <div class="fs-4 text-center py-0">Ita boot Logout ho susessu ona...!</div>
+                <div class="text-center py-0">Atu asesu fali sistem favor login fila fali</div>
+                <center class="mt-2"><a href="{% url 'login' %}" class="btn btn-sm btn-success px-5 rounded-5"
+                        id="btn_add">Ok</a>
+                </center>
+            </div>
+        </div>
+    </div>
+    <!-- Bootstrap JS -->
+    <!-- jQuery (required for DataTables) -->
+    <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'jquery/jquery-3.6.0.min.js' %}"></script>
+    <!-- DataTables JS -->
+    <script src="{% static 'datatables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'datatables/dataTables.bootstrap5.min.js' %}"></script>
+
+</body>
+
+</html>

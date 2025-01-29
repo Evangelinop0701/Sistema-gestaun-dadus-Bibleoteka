@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card" id="card">
+            <div class="card-header" id="card-header">
+                <div class="card-title">
+                    <h5>{{sub_title}} [<u>{{name_ktg}}</u>]</h5>
+                </div>
+            </div>
+            <div class="card-body">
+                <table id="activityTable" class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="py-1">#</th>
+                            <th scope="col" class="py-1">Naran Livro</th>
+                            <th scope="col" class="py-1">Autor</th>
+                            <th scope="col" class="py-1">Editor</th>
+                            <th scope="col" class="py-1">Data Tama</th>
+                            <th scope="col" class="py-1">Tiana Publikasaun</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for data in data_livro %}
+                        <tr>
+                            <td>{{forloop.counter}}</td>
+                            <td>{{data.naran_livro}}</td>
+                            <td>{{data.id_editor.naran_editor}}</td>
+                            <td>{{data.id_autor.naran_autor}}</td>
+                            <td>{{data.data_tama}}</td>
+                            <td>{{data.tinan_publikasaun}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,267 @@
+{% load static %}
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+    <!-- Bootstrap CSS -->
+    <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="{% static 'icon/all.css' %}">
+    <script src="{% static 'icon/all.js' %}"></script>
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="{% static 'datatables/dataTables.bootstrap5.min.css' %}">
+    <!-- Chart.js -->
+    <!-- <script src="{% static 'chartjs/chart.js' %}"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+
+    <!-- Add Select2 CSS -->
+    <!-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> -->
+
+
+
+    <style>
+        /* Fullscreen modal styling */
+        .modal-fullscreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            /* Semi-transparent black background */
+            z-index: 1050;
+            /* Ensure it's on top */
+        }
+
+        .modal-fullscreen img {
+            max-width: 100%;
+            max-height: 100%;
+            margin: auto;
+            display: block;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            /* Center the image */
+        }
+    </style>
+
+<body>
+
+    <!-- Sidebar -->
+    {% include 'sidebar.html' %}
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Top Navbar -->
+        {% include 'navbar.html' %}
+
+        <!-- Dashboard Content -->
+        <div class="container-fluid mt-4">
+            {% if messages %}
+            {% for message in messages %}
+            <div class="row my-0">
+                <div class="col-md-6 py-0">
+                    <div class="alert alert-success alert-dismissible fade show rounded-1" role="alert">
+                        <li class="my-0">{{ message }}</li>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% endif %}
+            {% block content %}
+
+            {% endblock %}
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <p>&copy; 2024 Admin Dashboard. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <!-- jQuery (required for DataTables) -->
+    <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'jquery/jquery-3.6.0.min.js' %}"></script>
+    <!-- DataTables JS -->
+    <script src="{% static 'datatables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'datatables/dataTables.bootstrap5.min.js' %}"></script>
+    <script>
+        // Sidebar toggle functionality
+        document.getElementById('sidebarToggle').addEventListener('click', function () {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            sidebar.classList.toggle('show');
+            overlay.classList.toggle('show');
+        });
+
+        // Overlay click functionality
+        document.getElementById('sidebarOverlay').addEventListener('click', function () {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            sidebar.classList.remove('show');
+            overlay.classList.remove('show');
+        });
+
+        // Initialize DataTable
+        $(document).ready(function () {
+            $('#activityTable').DataTable();
+        });
+
+        // Bar chart data
+
+        // const barCtx = document.getElementById('barChart').getContext('2d');
+        // const barChart = new Chart(barCtx, {
+        //     type: 'bar',
+        //     data: {
+        //         labels: [{% for i in fulan %}
+        //         '{{i.month }}',
+        // {% endfor %}],
+        // datasets: [{
+        //     label: 'Persentagen',
+        //     data: [{% for i in fulan %}
+        //         {{ i.percentage }},
+        // {% endfor %}],
+        //     backgroundColor: ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
+        //         borderColor: ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
+        //             borderWidth: 1
+        // }]
+        //     },
+        // options: {
+        //     scales: {
+        //         y: {
+        //             beginAtZero: true
+        //         }
+        //     }
+
+
+        // }
+        // });
+
+        // Pie chart data
+        const pieCtx = document.getElementById('pieChart').getContext('2d');
+        const pieChart = new Chart(pieCtx, {
+            type: 'pie',
+            data: {
+                labels: ['Red', 'Blue', 'Yellow'],
+                datasets: [{
+                    label: 'Votes',
+                    data: [300, 50, 100],
+                    backgroundColor: ['#d2d6de', '#3c8dbc', '#00c0ef', '#f39c12', '#00a65a', '#f56954'],
+                    borderColor: ['#d2d6de', '#3c8dbc', '#00c0ef', '#f39c12', '#00a65a', '#f56954'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Vote Distribution'
+                    }
+                }
+            }
+        });
+    </script>
+
+    <!-- Add jQuery (required for Select2) -->
+    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+ Add Select2 JS -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+ <script>
+    $(document).ready(function() {
+        // Apply Select2 to the dropdown field
+        $('#select').select2({
+            placeholder: "Hili Suku",
+            allowClear: true
+        });
+    });
+</script> -->
+
+    <script>
+        // Fetch the JSON file
+        fetch('/json_files/bar_chart_data.json')
+            .then(response => response.json())
+            .then(data => {
+                // Extract labels and values
+                const labels = data.map(item => item.naran_livro);
+                const totals = data.map(item => item.total);
+                const percentages = data.map(item => item.percentage);
+
+                // Create the bar chart
+                const ctx = document.getElementById('barChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels, // Book names
+                        datasets: [{
+                                label: 'Total Livro',
+                                backgroundColor: '#D4D4DF',
+                                borderColor: '#D4D4DF',
+                                borderWidth: 1,
+                                data: totals, // Total borrowed count
+                            },
+                            {
+                                label: 'Percentage (%)',
+                                backgroundColor: '#B8E6FB',
+                                borderColor: '#B8E6FB',
+                                borderWidth: 1,
+                                data: percentages, // Percentage values
+                            },
+                        ],
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                            },
+                            title: {
+                                display: true,
+                                text: 'Persentagen kada Tinan baseia ba Livro',
+                            },
+                            datalabels: {
+                                anchor: 'center',
+                                align: 'center',
+                                color: '#666',
+                                font: {
+                                    weight: 'normal',
+                                },
+                            },
+                        },
+                        scales: {
+                            x: {
+                                ticks: {
+                                    callback: function (value, index) {
+                                        // Pecah label menjadi dua baris
+                                        const label = this.getLabelForValue(value);
+                                        return label.split('\n');
+                                    },
+                                },
+                            },
+                        },
+                    },
+                    plugins: [ChartDataLabels],
+                });
+            })
+            .catch(error => console.error('Error loading chart data:', error));
+    </script>
+</body>
+
+</html>

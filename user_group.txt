@@ -1,0 +1,2 @@
+-atu fo sai grupu nia naran 
+{{ user.groups.first.name }}

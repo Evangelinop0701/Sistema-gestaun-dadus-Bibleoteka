@@ -1,0 +1,31 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-lg rounded-2">
+    <div class="container-fluid rounded-1">
+        <button class="btn btn-outline-secondary d-block d-md-none" id="sidebarToggle"><i
+                class="fa fa-list"></i></button>
+        <a class="navbar-brand fs-6" href="#">Utilizador: {{request.user.staff.naran_staff}}, <span
+                style="font-size: 12px;">{{user.last_login}}</span></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'detallu_staff' request.user.staff.id_staff %}"><i
+                            class="fa fa-user-friends"></i> Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'change-password' %}"><i class="fa fa-unlock-keyhole"></i> Edit
+                        Password</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'update_staff' request.user.staff.id_staff %}"><i
+                            class="fa fa-gear"></i> Settings</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}"><i class="fa fa-sign-out-alt "></i> Logout</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

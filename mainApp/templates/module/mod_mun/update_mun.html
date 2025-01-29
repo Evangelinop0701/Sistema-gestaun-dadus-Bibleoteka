@@ -1,0 +1,30 @@
+{% extends 'base.html' %} {% load crispy_forms_tags %} {% block content %}
+
+<div class="card">
+  <div class="card-header">
+    <ul class="nav nav-tabs card-header-tabs">
+      <li class="btn btn-outline-warning text-uppercase border-0 nav-item">
+        <a class="nav-link border-0 text-secondary fs-4" aria-current="true" href="{% url 'origin' %}">Munisipiu</a>
+      </li>
+      <li class="btn btn-outline-warning text-uppercase border-0 nav-item">
+        <a class="nav-link border-0 text-secondary fs-4" href="{% url 'postu' %}">Postu Admistrativo</a>
+      </li>
+      <li class="btn btn-outline-warning text-uppercase border-0 nav-item">
+        <a class="nav-link border-0 text-secondary fs-4" href="{% url 'suku'%}">Suku</a>
+      </li>
+    </ul>
+  </div>
+  <div class=" card-body">
+    <form action="" method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form|crispy }}
+
+      <button type="submin" class="btn btn-sm btn-primary"><i class="fa fa-save"></i> Update</button>
+      <button type="reset" class="btn btn-sm btn-danger" onclick="self.history.back()"><i class="fa fa-cancel"></i>
+        Kansela</button>
+    </form>
+  </div>
+</div>
+</div>
+
+{% endblock %}

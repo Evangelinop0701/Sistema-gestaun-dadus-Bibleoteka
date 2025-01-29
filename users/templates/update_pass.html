@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card rounded-1" id="card">
+            <div class="card-header rounded-0" id="card-header">
+                <div class="cart-title">
+                    <h5 class="card-title">{{sub_title}}</h5>
+                </div>
+            </div>
+            <div class="card-body">
+                <form action="{% url 'change-password' %}" method="post" class="has-validation">
+                    {% csrf_token %}
+                    <div class="my-2">
+                        <label for="">Old Password</label>
+                        <input type="password" name="old_password" id="" class="form-control form-control-sm"
+                            placeholder="Entry......" required>
+                    </div>
+                    <div class="my-2">
+                        <label for="">New Password</label>
+                        <input type="password" name="new_password" id="" class="form-control form-control-sm"
+                            placeholder="Entry......" required>
+                    </div>
+                    <div class="my-2">
+                        <label for="">Password Comfirm</label>
+                        <input type="password" name="password_confirm" id="" class="form-control form-control-sm"
+                            placeholder="Entry......" required>
+                    </div>
+                    <div class="my-2">
+                        <button type="submit" class="btn btn-sm btn-primary">Update</button>
+                        <button type="reset" class="btn btn-sm btn-danger">Cansel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

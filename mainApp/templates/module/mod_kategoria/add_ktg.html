@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card rounded-1" id="card">
+            <div class="card-header rounded-0" id="card-header">
+                <div class="cart-title">
+                    <h5 class="card-title">{{sub_title}}</h5>
+                </div>
+            </div>
+            <div class="card-body">
+              <form action="{% url 'add_ktg' %}" method="POST">
+                {% csrf_token %}
+                {{ form|crispy }}
+
+                <button type="submin" class="btn btn-primary">Rai dadus</button>
+                <button type="reset" class="btn btn-dark">Kansela</button>
+              </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

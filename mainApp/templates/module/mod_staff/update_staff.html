@@ -1,0 +1,35 @@
+{% extends 'base.html' %} {% load crispy_forms_tags %} {% block content %}
+
+<div class="row mt-4">
+  <div class="col-md-12">
+    <div class="card rounded-1" id="card">
+      <div class="card-header rounded-0" id="card-header">
+        <div class="cart-title">
+          <h5 class="card-title">{{sub_title}}</h5>
+        </div>
+      </div>
+      <div class="card-body">
+        <form
+          action="{% url 'update_staff' data.id_staff %}"
+          method="POST"
+          enctype="multipart/form-data"
+        >
+          {% csrf_token %} {{ form|crispy }}
+
+          <button type="submin" class="btn btn-sm btn-primary">
+            <i class="fa fa-save"></i> Update
+          </button>
+          <button
+            type="reset"
+            class="btn btn-sm btn-danger"
+            onclick="self.history.back()"
+          >
+            <i class="fa fa-cancel"></i> Kansela
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

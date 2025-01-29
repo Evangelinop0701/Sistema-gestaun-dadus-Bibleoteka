@@ -1,0 +1,97 @@
+ <script>
+     var ctx = document.getElementById('barChart').getContext('2d');
+
+     // Data bulan dan produk
+     const months = [{
+             %
+             for il in fulan %
+         }
+         '',
+         {
+             %
+             endfor %
+         }
+     ];
+
+
+     const products = [{
+             %
+             for il in fulan %
+         }
+         '{{il.naran_livro}}',
+         {
+             %
+             endfor %
+         }
+     ];
+
+     new Chart(ctx, {
+         type: 'bar',
+         data: {
+             labels: months.map((month, i) =>
+                 `${month}\n${products[i]}`), // Gabungkan label bulan dan produk
+             datasets: [{
+                     label: 'Total Livro',
+                     backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                     borderColor: 'rgb(255, 99, 132)',
+                     borderWidth: 1,
+                     data: [{
+                             %
+                             for i in fulan %
+                         }
+                         '{{i.total}}',
+                         {
+                             %
+                             endfor %
+                         }
+                     ],
+                 },
+                 {
+                     label: '(% Livro)',
+                     backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                     borderColor: 'rgb(54, 162, 235)',
+                     borderWidth: 1,
+                     data: [{
+                             %
+                             for i in fulan %
+                         }
+                         '{{i.percentage}}',
+                         {
+                             %
+                             endfor %
+                         }
+                     ],
+                 },
+             ],
+         },
+         options: {
+             responsive: true,
+             title: {
+                 display: true,
+                 text: 'Bar Chart with Dual X-Axis Labels',
+             },
+             plugins: {
+                 datalabels: {
+                     anchor: 'center',
+                     align: 'center',
+                     color: '#666',
+                     font: {
+                         weight: 'normal',
+                     },
+                 },
+             },
+             scales: {
+                 x: {
+                     ticks: {
+                         callback: function (value, index) {
+                             // Pecah label menjadi dua baris
+                             const label = this.getLabelForValue(value);
+                             return label.split('\n');
+                         },
+                     },
+                 },
+             },
+         },
+         plugins: [ChartDataLabels],
+     });
+ </script>
